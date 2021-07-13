@@ -2,11 +2,28 @@
 
 export const activate = () => {
     
+    /**
+     * Allows to have a decay time in which the key is still rendered even when not pressed anymore for readibility purposes
+     * Keys will decay after this duration in ms
+     * @type {number}
+     */
     const KEY_DECAY = 1000;
 
+    /**
+     * Node which contains the rendered keys
+     * @type {HTMLDivElement}
+     */
     let $node = null;
+
+    /**
+     * Currently pressed keys
+     * @type {Object<string, true>}
+     */
     let keys = {};
-    let blacklist = [];
+
+    /**
+     * Render timeout uusing KEY_DECAY
+     */
     let timeout = null;
     
     /**
@@ -18,40 +35,40 @@ export const activate = () => {
             `
                 <div id="keystroke-container"></div>
                 <style>
-                #keystroke-container {
-                    z-index: 10000000000000000000;
-                    position: fixed;
-                    pointer-events: none;
-                    left: calc(50% - 100px);
-                    width: 200px;
-                    top: -4px;
-                    height: 60px;
-                    display: flex;
-                    justify-content: center;
-                    font-size: 200%;
-                }
-                #keystroke-container .keystroke {
-                    text-align: center;
-                    margin: 6px;
-                    padding-left: 10px;
-                    padding-right: 10px;
-                    height: 30px;
-                    border-radius: 4px;
-                    color: white;
-                    background-color: #333;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    z-index: 10000000000000000000;
-                    border: 1px solid white;
-                }
+                    #keystroke-container {
+                        z-index: 10000000000000000000;
+                        position: fixed;
+                        pointer-events: none;
+                        left: calc(50% - 100px);
+                        width: 200px;
+                        top: -4px;
+                        height: 60px;
+                        display: flex;
+                        justify-content: center;
+                        font-size: 200%;
+                    }
+                    #keystroke-container .keystroke {
+                        text-align: center;
+                        margin: 6px;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        height: 30px;
+                        border-radius: 4px;
+                        color: white;
+                        background-color: #333;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        z-index: 10000000000000000000;
+                        border: 1px solid white;
+                    }
                 </style>
             `);
         $node = document.getElementById('keystroke-container');
     };
     
     /**
-     * Draw the given keys
+     * Renders the given keys
      * @param {Array<string>} keys
      */
     const update = () => {
@@ -60,7 +77,7 @@ export const activate = () => {
     };
     
     /**
-     * Reset keys
+     * Format a given key for display purposes
      */
     const formatKey = key => {
         if (key.length === 1) {
@@ -80,11 +97,9 @@ export const activate = () => {
     
     /**
      * When any key is pressed
+     * @param {KeyboardEvent} event
      */
     const onKeyDown = event => {
-        if (blacklist.indexOf(event.key) !== -1) {
-            return;
-        }
         clearTimeout(timeout);
         keys[event.key] = true;
         update();
@@ -92,11 +107,9 @@ export const activate = () => {
     
     /**
      * When any key is released
+     * @param {KeyboardEvent} event
      */
     const onKeyUp = event => {
-        if (blacklist.indexOf(event.key) !== -1) {
-            return;
-        }
         clearTimeout(timeout);
         delete keys[event.key];
         timeout = setTimeout(() => {
@@ -105,6 +118,10 @@ export const activate = () => {
     };
 
     build();
+
+    /*
+     * Bind events to update rendered keys
+     */
     window.addEventListener('keydown', onKeyDown);
     window.addEventListener('keyup', onKeyUp);
     window.addEventListener('blur', reset);
