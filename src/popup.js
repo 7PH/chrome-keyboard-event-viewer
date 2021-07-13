@@ -7,11 +7,14 @@ import { activate } from './helpers';
  */
 const stateButton = document.getElementById("stateButton");
 
+const updateStateButton = () => {
+    chrome.storage.sync.get("state", ({ state }) => {
+        stateButton.innerHTML = state ? 'ON' : 'OFF';
+        stateButton.style.backgroundColor = state ? 'green' : 'red';
+    });
+};
 
-chrome.storage.sync.get("state", ({ state }) => {
-    stateButton.innerHTML = state ? 'ON' : 'OFF';
-    stateButton.style.backgroundColor = state ? 'green' : 'red';
-});
+updateStateButton();
 
 // When the button is clicked, inject setPageBackgroundColor into current page
 stateButton.addEventListener("click", async () => {
@@ -25,5 +28,7 @@ stateButton.addEventListener("click", async () => {
             target: { tabId: tab.id },
             function: activate,
         });
+        
+        updateStateButton();
     });
 });

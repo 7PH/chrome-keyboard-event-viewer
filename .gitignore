@@ -1,2 +1,4 @@
-dist
 node_modules
+popup.js*
+background.js*
+extension.zip

@@ -2,9 +2,14 @@ const path = require('path');
 
 
 module.exports = {
-    entry: './src/popup.js',
-    output: {
-      filename: 'popup.js',
-      path: path.resolve(__dirname, 'dist'),
+    entry: {
+        popup: './src/popup.js',
+        background: './src/background.js',
     },
+    mode: 'development',
+    output: {
+        filename: '[name].js',
+        path: __dirname,
+    },
+    devtool: 'cheap-module-source-map',
 };

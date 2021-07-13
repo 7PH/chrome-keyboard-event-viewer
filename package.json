@@ -5,7 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "bundle": "zip -r extension.zip images styles *.js *.html *.json"
   },
   "keywords": [],
   "author": "",
