@@ -1,6 +1,8 @@
 <h1 align="center">
     <br>
-    <img src="images/logo_128.png" alt="Keyboard Event Viewer" width="128">
+    <a href="https://chrome.google.com/webstore/detail/keyboard-event-viewer/dbokhbfkfmelfnldgfiekmoojmnmfeji" target="_blank">
+        <img src="images/logo_128.png" alt="Keyboard Event Viewer" width="128">
+    </a>
     <br>
     Keyboard Event Viewer
     <br>
@@ -12,7 +14,7 @@ The **Keyboard Event Viewer** extension renders the currently pressed keyboard k
 Essential for trainings and presentations to share keyboard shortcuts with participants.
 It can be toggled with a single click.
 
-One-click install available on the Chrome Web Store.
+One-click install available on [the Chrome Web Store](https://chrome.google.com/webstore/detail/keyboard-event-viewer/dbokhbfkfmelfnldgfiekmoojmnmfeji).
 
 ## License
 
